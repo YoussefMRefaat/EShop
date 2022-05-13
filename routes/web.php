@@ -95,16 +95,21 @@ Route::group([
     Route::group([
         'prefix' => '/orders',
     ],function(){
-        Route::get('/{status?}' , [\App\Http\Controllers\Admin\Orders\ShowController::class , 'index'])
+        Route::get('/' , [\App\Http\Controllers\Admin\Orders\ShowController::class , 'index'])
             ->name('dashboard.orders');
         Route::get('/{order}' , [\App\Http\Controllers\Admin\Orders\ShowController::class , 'show'])
             ->name('dashboard.orders.show');
+        Route::get('/{order_status}' , [\App\Http\Controllers\Admin\Orders\ShowController::class , 'status'])
+            ->name('dashboard.orders.status');
         Route::patch('/{order}/ship' , [\App\Http\Controllers\Admin\Orders\EditController::class , 'ship'])
-            ->name('dashboard.orders.ship')->middleware('order.status:pending');
+            ->name('dashboard.orders.ship')->middleware('order.status:' . \App\Enums\OrderStatus::Pending->value);
         Route::patch('/{order}/deliver' , [\App\Http\Controllers\Admin\Orders\EditController::class , 'deliver'])
-            ->name('dashboard.orders.deliver')->middleware('order.status:shipped');
+            ->name('dashboard.orders.deliver')->middleware('order.status:'. \App\Enums\OrderStatus::Shipped->value);
         Route::patch('/{order}/cancel' , [\App\Http\Controllers\Admin\Orders\EditController::class , 'cancel'])
-            ->name('dashboard.orders.cancel')->middleware(['order.status:pending,shipped,delivered' , 'restorable']);
+            ->name('dashboard.orders.cancel')
+            ->middleware(['order.status:' . \App\Enums\OrderStatus::Pending->value . ',' .
+                \App\Enums\OrderStatus::Shipped->value . ',' .
+                \App\Enums\OrderStatus::Delivered->value , 'restorable']);
         Route::patch('/{order}/restore' , [\App\Http\Controllers\Admin\Orders\EditController::class , 'restore'])
             ->name('dashboard.orders.restore')->middleware('order.status:cancelled');
     });

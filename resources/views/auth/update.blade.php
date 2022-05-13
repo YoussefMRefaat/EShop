@@ -11,7 +11,7 @@
                 <x-user.form.text-input :value="auth()->user()->address" required="required" name="address"
                                         title="Address"></x-user.form.text-input>
                 <x-user.form.text-input :value="auth()->user()->phone" required="required" name="phone"
-                                        title="Phone Number"></x-user.form.text-input>
+                                        title="Phone Number Like 01012345678"></x-user.form.text-input>
                 <x-user.form.button-input title="update"></x-user.form.button-input>
                 <div class="input-group">
                     <a href=" {{ route('user.update_password') }} ">Update Password</a>

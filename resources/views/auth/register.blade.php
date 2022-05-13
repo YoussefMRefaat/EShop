@@ -7,9 +7,10 @@
             <x-slot name="inputs">
                 <x-user.form.text-input :value="old('name')" required="required"></x-user.form.text-input>
                 <x-user.form.email-input :value="old('email')" required="required"></x-user.form.email-input>
-                <x-user.form.text-input :value="old('address')" name="address" placeholder="Address" required="required">
+                <x-user.form.text-input :value="old('address')" name="address" title="Address" required="required">
                 </x-user.form.text-input>
-                <x-user.form.text-input :value="old('phone')" name="phone" placeholder="Phone Number" required="required">
+                <x-user.form.text-input :value="old('phone')" name="phone"
+                                        title="Phone Number Like 01012345678" required="required">
                 </x-user.form.text-input>
                 <x-user.form.password-input required="required"></x-user.form.password-input>
                 <x-user.form.password-input required="required" name="password_confirmation" placeholder="Confirm password">

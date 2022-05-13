@@ -7,5 +7,5 @@
     <label for="{{$name}}">{{$title}}</label>
     <input type="number" class="form-control" id="{{$name}}"
            placeholder="{{$title}}" name="{{$name}}"
-           value="{{$value}}" required>
+           value="{{$value ?? old($name)}}" required>
 </div>

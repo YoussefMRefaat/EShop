@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Orders;
 
+use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Traits\TotalPriceCalculator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class ShowController extends Controller
@@ -15,14 +18,34 @@ class ShowController extends Controller
     /**
      * Display all orders
      *
-     * @param string|null $status
      * @return \Illuminate\View\View
      */
-    public function index(string $status = null): \Illuminate\View\View
+    public function index(): \Illuminate\View\View
     {
-        $orders = ($status && in_array($status , ['pending' , 'shipped' , 'delivered' , 'cancelled' , 'restored']))
-            ? Order::with('user')->with('products')->where('status' , $status)->paginate(10)
-            : Order::with('user')->with('products')->paginate(10);
+        $orders = Order::with('user')->paginate(10);
+        return $this->indexView($orders);
+    }
+
+    /**
+     * Display orders that have certain status
+     *
+     * @param OrderStatus $orderStatus
+     * @return \Illuminate\View\View
+     */
+    public function status(OrderStatus $orderStatus): \Illuminate\View\View
+    {
+        $orders = Order::with('user')->where('status' , $orderStatus)->paginate(10);
+        return $this->indexView($orders);
+    }
+
+    /**
+     * Get the view of displaying orders
+     *
+     * @param LengthAwarePaginator $orders
+     * @return \Illuminate\View\View
+     */
+    public function indexView(LengthAwarePaginator $orders): \Illuminate\View\View
+    {
         $this->calculateEveryTotalPrice($orders);
         return view('admin.orders.index' , compact('orders'));
     }

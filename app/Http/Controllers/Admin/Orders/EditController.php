@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Orders;
 
+use App\Enums\OrderStatus;
+use App\Events\OrderRestored;
+use App\Events\OrderShipped;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Traits\StockHandler;
 use Illuminate\Http\Request;
 
 class EditController extends Controller
 {
-    use StockHandler;
-
     /**
      * Mark an order as shipped
      *
@@ -19,8 +19,8 @@ class EditController extends Controller
      */
     public function ship(Order $order): \Illuminate\Http\RedirectResponse
     {
-        $order->update(['status' => 'shipped' , 'shipped_at' => now()]);
-        $this->shipped($order);
+        $order->update(['status' => OrderStatus::Shipped , 'shipped_at' => now()]);
+        OrderShipped::dispatch($order);
         return redirect(route('dashboard.orders'))->with('success' , 'Order has been shipped successfully');
     }
 
@@ -32,7 +32,7 @@ class EditController extends Controller
      */
     public function deliver(Order $order):\Illuminate\Http\RedirectResponse
     {
-        $order->update(['status' => 'delivered' , 'delivered_at' => now()]);
+        $order->update(['status' => OrderStatus::Delivered , 'delivered_at' => now()]);
         return redirect(route('dashboard.orders'))->with('success' , 'Order has been delivered successfully');
     }
 
@@ -44,7 +44,7 @@ class EditController extends Controller
      */
     public function cancel(Order $order): \Illuminate\Http\RedirectResponse
     {
-        $order->update(['status' => 'cancelled']);
+        $order->update(['status' => OrderStatus::Cancelled]);
         return redirect(route('dashboard.orders'))->with('success' , 'Order has been cancelled successfully');
     }
 
@@ -56,8 +56,8 @@ class EditController extends Controller
      */
     public function restore(Order $order): \Illuminate\Http\RedirectResponse
     {
-        $order->update(['status' => 'restored']);
-        $this->restored($order);
+        $order->update(['status' => OrderStatus::Restored]);
+        OrderRestored::dispatch($order);
         return redirect(route('dashboard.orders'))->with('success' , 'Order has been restored successfully');
     }
 

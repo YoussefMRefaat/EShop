@@ -7,21 +7,11 @@
                         <ul class="nav navbar-expand-md mr-auto">
                             <li class="nav-item m-sm-2">
                                 <a href="{{route('dashboard.orders')}}" class="nav-link">All</a></li>
-                            <li class="nav-item m-sm-2">
-                                <a href="{{route('dashboard.orders' , 'pending')}}" class="nav-link">Pending
-                                </a></li>
-                            <li class="nav-item m-sm-2">
-                                <a href="{{route('dashboard.orders' , 'shipped')}}" class="nav-link">Shipped
-                                </a></li>
-                            <li class="nav-item m-sm-2">
-                                <a href="{{route('dashboard.orders' , 'delivered')}}" class="nav-link">
-                                    Delivered </a></li>
-                            <li class="nav-item m-sm-2">
-                                <a href="{{route('dashboard.orders' , 'cancelled')}}" class="nav-link">
-                                    Cancelled</a></li>
-                            <li class="nav-item m-sm-2">
-                                <a href="{{route('dashboard.orders' , 'restored')}}" class="nav-link">Restored
-                                </a></li>
+                            @foreach(\App\Enums\OrderStatus::values() as $value)
+                                <li class="nav-item m-sm-2">
+                                    <a href="{{route('dashboard.orders.status' , $value)}}" class="nav-link">{{ $value }}
+                                    </a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </nav>
@@ -50,22 +40,7 @@
                         <td><a href="{{route('dashboard.users.show' , $order->user->id)}}">
                                 {{$order->user->name}}</a></td>
                         <td>
-                            @switch($order->status)
-                                @case('pending')
-                                    <label class="badge badge-warning">Pending</label>
-                                @break
-                                @case('shipped')
-                                    <label class="badge badge-info">Shipped</label>
-                                @break
-                                @case('delivered')
-                                    <label class="badge badge-success">Delivered</label>
-                                @break
-                                @case('cancelled')
-                                    <label class="badge badge-danger">Cancelled</label>
-                                @break
-                                @case('restored')
-                                    <label class="badge badge-dark">Restored</label>
-                            @endswitch
+                            <label class="badge badge-{{$order->status->badge()}}">{{ $order->status->value }}</label>
                         </td>
                         <td>{{$order->created_at}}</td>
                         <td>{{$order->shipped_at}}</td>
@@ -77,7 +52,7 @@
                                class="btn btn-light btn-sm m-1 border-0 btn-outline-info"><i class="ti-eye"></i> </a>
                         </td>
                         <td>
-                            @if($order->status == 'pending')
+                            @if($order->status == \App\Enums\OrderStatus::Pending)
                                 <form class="d-md-inline m-1"
                                       action="{{route('dashboard.orders.ship' , $order->id)}}" method="POST">
                                     @method('PATCH')
@@ -89,7 +64,7 @@
                             @endif
                         </td>
                         <td>
-                            @if($order->status == 'shipped')
+                            @if($order->status == \App\Enums\OrderStatus::Shipped)
                                 <form class="d-md-inline m-1" method="POST"
                                       action="{{route('dashboard.orders.deliver' , $order->id)}}">
                                     @method('PATCH')
@@ -102,7 +77,7 @@
                             @endif
                         </td>
                         <td>
-                            @if(!in_array($order->status,['cancelled','restored']))
+                            @if(!in_array($order->status,[\App\Enums\OrderStatus::Cancelled,\App\Enums\OrderStatus::Restored]))
                                 <form class="d-md-inline m-1" method="POST"
                                       action="{{route('dashboard.orders.cancel' , $order->id)}}">
                                     @method('PATCH')
@@ -115,7 +90,7 @@
                             @endif
                         </td>
                         <td>
-                            @if(in_array($order->status , ['cancelled' , 'pending']))
+                            @if(in_array($order->status , [\App\Enums\OrderStatus::Cancelled , \App\Enums\OrderStatus::Pending]))
                                 <form class="d-md-inline m-1" method="POST"
                                       action="{{route('dashboard.orders.restore' , $order->id)}}">
                                     @method('PATCH')

@@ -5,5 +5,5 @@
     <p class="text-danger">{{$message}}</p>
     @enderror
     <label for="{{$name}}">{{$title}}</label>
-    <textarea class="form-control" id="{{$name}}" name="{{$name}}" required>{{$value}}</textarea>
+    <textarea class="form-control" id="{{$name}}" name="{{$name}}" required>{{$value ?? old($name)}}</textarea>
 </div>

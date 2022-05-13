@@ -6,5 +6,5 @@
     @enderror
     <label for="{{$name}}">{{$title}}</label>
     <input type="text" class="form-control" id="{{$name}}"
-           placeholder="{{$title}}" name="{{$name}}" value="{{$value}}" required>
+           placeholder="{{$title}}" name="{{$name}}" value="{{$value ?? old($name)}}" required>
 </div>

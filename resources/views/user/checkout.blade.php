@@ -14,26 +14,32 @@
                             <p class="text-danger">{{session('error')}}</p>
                         @endif
                             <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label>Name</label>
-                                <input class="form-control" type="text" value="{{auth()->user()->name}}" disabled>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>E-mail</label>
-                                <input class="form-control" type="text" value="{{auth()->user()->email}}" disabled>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Mobile No</label>
-                                <input class="form-control" type="text" value="{{auth()->user()->phone}}" disabled>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address Line </label>
-                                <input class="form-control" type="text" value="{{auth()->user()->address}}" disabled>
-                            </div>
-                            <a href="{{route('user.update')}}">
-                                <button class="btn btn-primary">Update Your Data</button>
-                            </a>
+                        <div>
+                            <form class="row" action="{{ route('user.update') }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="col-md-6 form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" name="name"
+                                           value="{{auth()->user()->name}}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>E-mail</label>
+                                    <input class="form-control" type="text" name="email"
+                                           value="{{auth()->user()->email}}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text" name="phone"
+                                           value="{{auth()->user()->phone ?? old('phone')}}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address Line </label>
+                                    <input class="form-control" type="text" name="address"
+                                           value="{{auth()->user()->address ?? old('address')}}">
+                                </div>
+                                    <button class="btn btn-primary" type="submit">Update Your Data</button>
+                            </form>
                         </div>
                     </div>
                 </div>

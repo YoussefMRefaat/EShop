@@ -2,6 +2,7 @@
 
 namespace App\Services\Auth;
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,10 +51,12 @@ class SocialSignService{
      */
     private function register(\Laravel\Socialite\Contracts\User $socialUser): User
     {
-        return User::create([
+        $user =  User::create([
             'name' => $socialUser->getName(),
             'email' => $socialUser->getEmail(),
         ]);
+        Cart::create(['user_id' => $user->id]);
+        return $user;
     }
 
 }

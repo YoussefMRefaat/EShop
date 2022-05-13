@@ -7,7 +7,7 @@
             <div class="row px-xl-5">
                 <div class="row pb-3">
                     @foreach($products as $product)
-                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                        <div class="col pb-1">
                             <div class="card product-item border-0 mb-4">
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                     <img class="img-fluid w-100" src="{{asset($product->image)}}" alt="">
@@ -24,8 +24,13 @@
                                         <i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                                     <a onclick="like({{$product->id}})" class="btn btn-sm text-dark p-0" id="like{{$product->id}}">
                                         <i class="fas fa-heart text-primary mr-1"></i>Unlike</a>
-                                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1">
-                                        </i>Add To Cart</a>
+                                    <form action="{{route('cart')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                                        <button class="btn btn-sm text-dark p-0" type="submit">
+                                            <i class="fas fa-shopping-cart text-primary mr-1">
+                                            </i>Add To Cart</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -17,13 +17,16 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        $id = DB::table('users')->insertGetId([
             'name' => 'admin',
             'email' => 'admin@test',
             'address' => 'home',
             'phone'=> '+20 1234 567 890',
             'password' => Hash::make('Admin123'),
             'is_admin' => true,
+        ]);
+        DB::table('carts')->insert([
+            'user_id' => $id,
         ]);
     }
 }

@@ -19,7 +19,7 @@ class OrderStatus
     public function handle(Request $request, Closure $next , string ...$status): \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
     {
         $order = $request->route('order');
-        if(!in_array($order->status , $status))
+        if(!in_array($order->status->value , $status))
             abort(409 , 'The order is not ready for this operation');
         return $next($request);
     }

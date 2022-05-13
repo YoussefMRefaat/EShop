@@ -32,7 +32,7 @@ class UpdateUserController extends Controller
     public function update(UpdateDataRequest $request): \Illuminate\Http\RedirectResponse
     {
         auth()->user()->update($request->validated());
-        return redirect(route('user.update'))->with('success' , 'Updated successfully');
+        return redirect()->back()->with('success' , 'Updated successfully');
     }
 
     /**

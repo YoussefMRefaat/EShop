@@ -5,5 +5,5 @@
 @enderror
 <div class="input-group mb-3">
     <input type="text" class="form-control p-4 border border-primary" placeholder="{{$title}}"
-           name="{{$name}}" value="{{ $value }}" {{$required}}>
+           name="{{$name}}" value="{{ $value ?? old($name) }}" {{$required}}>
 </div>
