@@ -54,7 +54,7 @@
                                 <div class="d-flex justify-content-between">
                                     <p>{{$product->name}}</p>
                                     <p>{{$product->pivot->quantity}}</p>
-                                    <p>${{$product->total}}</p>
+                                    <p>${{$product->price * $product->pivot->quantity}}</p>
                                 </div>
                             @endforeach
                             <hr class="mt-0">

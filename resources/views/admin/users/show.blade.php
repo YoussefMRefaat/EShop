@@ -82,7 +82,7 @@
                         <td>{{$order->shipped_at}}</td>
                         <td>{{$order->delivered_at}}</td>
                         <td>{{$order->ship_fee}}</td>
-                        <td>{{$order->total_price}}</td>
+                        <td>{{$order->total_price + $order->ship_fee}}</td>
                         <td>
                             <a href="{{route('dashboard.orders.show' , $order->id)}}"
                                class="btn btn-light btn-sm m-1 border-0 btn-outline-info"><i class="ti-eye"></i> </a>

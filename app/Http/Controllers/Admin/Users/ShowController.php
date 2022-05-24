@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Traits\TotalPriceCalculator;
 use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
-    use TotalPriceCalculator;
-
     /**
      * Display all users
      *
@@ -31,7 +28,6 @@ class ShowController extends Controller
     public function show(User $user): \Illuminate\View\View
     {
         $user->load('orders');
-        $this->calculateEveryTotalPrice($user->orders);
         return view('admin.users.show' , compact('user'));
     }
 

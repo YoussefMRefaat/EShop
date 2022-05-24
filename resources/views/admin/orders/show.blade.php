@@ -29,7 +29,7 @@
                         <td>{{$order->shipped_at}}</td>
                         <td>{{$order->delivered_at}}</td>
                         <td>{{$order->ship_fee}}</td>
-                        <td>{{$order->total_price}}</td>
+                        <td>{{$order->total_price + $order->ship_fee}}</td>
                         <td>
                             @if($order->status == \App\Enums\OrderStatus::Pending)
                                 <form class="d-md-inline m-1"

@@ -47,7 +47,7 @@
                                             </div>
                                         </form>
                                     </td>
-                                    <td class="align-middle">${{$product->total}}</td>
+                                    <td class="align-middle">${{$product->price * $product->pivot->quantity}}</td>
                                     <td class="align-middle">
                                         <form action="{{route('cart')}}" method="POST">
                                             @csrf

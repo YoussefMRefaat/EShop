@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Products;
 
+use App\Events\ProductImageUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Traits\ImageHandler;
 use Illuminate\Http\Request;
 
 class EditController extends Controller
 {
-    use ImageHandler;
-
     /**
      * Display the edit product forms
      *
@@ -46,12 +44,10 @@ class EditController extends Controller
      * @param Product $product
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateImage(Request $request,Product $product): \Illuminate\Http\RedirectResponse
+    public function updateImage(Request $request , Product $product): \Illuminate\Http\RedirectResponse
     {
         $request->validate(['image' => ['required' , 'image' , 'max:1024']]);
-        $this->deleteImage($product->image);
-        $image = $this->saveImage($request->file('image') , 'products');
-        $product->update(['image' => $image]);
+        ProductImageUpdated::dispatch($product);
         return redirect(route('dashboard.products'))->with('success' , 'Product\'s image has been updated successfully');
     }
 
@@ -63,7 +59,7 @@ class EditController extends Controller
      */
     public function destroy(Product $product): \Illuminate\Http\RedirectResponse
     {
-        $this->deleteImage($product->image);
+        // image is deleted from storage by the ovserver
         $product->delete();
         return redirect(route('dashboard.products'))->with('success' , 'Product has been deleted successfully');
     }

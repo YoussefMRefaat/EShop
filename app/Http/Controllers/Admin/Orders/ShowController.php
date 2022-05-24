@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Orders;
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Traits\TotalPriceCalculator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,8 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class ShowController extends Controller
 {
-    use TotalPriceCalculator;
-
     /**
      * Display all orders
      *
@@ -46,7 +43,6 @@ class ShowController extends Controller
      */
     public function indexView(LengthAwarePaginator $orders): \Illuminate\View\View
     {
-        $this->calculateEveryTotalPrice($orders);
         return view('admin.orders.index' , compact('orders'));
     }
 
@@ -59,7 +55,6 @@ class ShowController extends Controller
     public function show(Order $order): \Illuminate\View\View
     {
         $order->load(['products' , 'user']);
-        $this->calculateOneTotalPrice($order);
         return view('admin.orders.show' , compact('order'));
     }
 

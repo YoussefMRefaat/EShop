@@ -6,13 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Traits\ImageHandler;
-use Illuminate\Http\Request;
 
 class CreateController extends Controller
 {
-    use ImageHandler;
-
     /**
      * Display the create product form
      *
@@ -32,9 +28,8 @@ class CreateController extends Controller
      */
     public function store(StoreProductRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $data = $request->validated();
-        $data['image'] = $this->saveImage($data['image'] , 'products');
-        Product::create($data);
+        // image is stored in the storage by the observer
+        Product::create($request->validated());
         return redirect(route('dashboard.products'))->with('success' , 'Product has been added successfully');
     }
 

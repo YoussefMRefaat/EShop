@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use App\Events\OrderRestored;
 use App\Events\OrderShipped;
+use App\Events\ProductImageUpdated;
 use App\Listeners\ReduceQuantity;
 use App\Listeners\RestoreQuantity;
+use App\Listeners\UpdateProductImage;
+use App\Models\Product;
+use App\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         OrderRestored::class => [
             RestoreQuantity::class,
         ],
+        ProductImageUpdated::class => [
+            UpdateProductImage::class,
+        ],
     ];
 
     /**
@@ -37,6 +44,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Product::observe(ProductObserver::class);
     }
 }

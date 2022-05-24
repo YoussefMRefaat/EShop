@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Cart extends Model
 {
@@ -19,6 +21,13 @@ class Cart extends Model
     protected $fillable=[
         'user_id',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['total_price'];
 
     /**
      * Define the relationship between the cart and the user who owns it
@@ -39,4 +48,17 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
+
+    /**
+     * Access the total price of the order
+     *
+     * @return Attribute
+     */
+    public function totalPrice(): Attribute
+    {
+        return Attribute::make(
+            get:fn($value) => $this->products()->sum(DB::raw('cart_product.quantity * price'))
+        );
+    }
+
 }

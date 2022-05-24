@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -35,6 +37,13 @@ class Order extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['total_price'];
+
+    /**
      * Define the relationship between the order and the user who ordered it
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -53,6 +62,18 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class)
             ->withPivot('quantity' , 'each_price');
+    }
+
+    /**
+     * Access the total price of the order
+     *
+     * @return Attribute
+     */
+    public function totalPrice(): Attribute
+    {
+        return Attribute::make(
+            get:fn($value) => $this->products()->sum(DB::raw('order_product.quantity * order_product.each_price'))
+        );
     }
 
 }
