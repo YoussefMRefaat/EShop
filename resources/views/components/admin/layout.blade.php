@@ -7,7 +7,9 @@
     <body>
         <div class="container-scroller">
             <x-admin.navbar>
-                {{$search}}
+                <x-slot name="search">
+                    {{$search}}
+                </x-slot>
             </x-admin.navbar>
 
             <div class="container-fluid page-body-wrapper">

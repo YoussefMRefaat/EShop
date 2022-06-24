@@ -17,7 +17,7 @@ class ShowController extends Controller
     public function index(): \Illuminate\View\View
     {
         $products = Product::with('category')->withCount(['favourites' , 'orders'])->get();
-        return view('admin.products.index' , ['products' => $products]);
+        return view('admin.products.index' , compact('products'));
     }
 
     /**
@@ -28,10 +28,10 @@ class ShowController extends Controller
      */
     public function search(Request $request): \Illuminate\View\View
     {
-        $validated = $request->validate(['search' => ['string' , 'required']]);
+        $searchFor = $request->validate(['search' => ['string' , 'required']])['search'];
         $products = Product::with('category')->withCount(['favourites' , 'orders'])
-            ->where('name' , 'like' , '%' . $validated['search'] . '%')->get();
-        return view('admin.products.index' , ['products' => $products , 'searchFor' => $validated['search']]);
+            ->where('name' , 'like' , '%' . $searchFor . '%')->get();
+        return view('admin.products.index' , compact('products' , 'searchFor'));
     }
 
 }

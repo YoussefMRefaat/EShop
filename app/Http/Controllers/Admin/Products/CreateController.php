@@ -17,7 +17,7 @@ class CreateController extends Controller
     public function create(): \Illuminate\View\View
     {
         $categories = Category::select('id' , 'name')->get();
-        return view('admin.products.create' , ['categories' => $categories]);
+        return view('admin.products.create' , compact('categories'));
     }
 
     /**

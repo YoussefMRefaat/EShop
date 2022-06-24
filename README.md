@@ -7,8 +7,9 @@ Built using ***Laravel*** | ***MySQL*** | ***AJAX***
 
 ## Features
 
-There are three types of roles in this application :-
+There are four types of roles in this application :-
 - Admin
+- Moderator
 - User
 - Guest
 
@@ -29,17 +30,17 @@ There are three types of roles in this application :-
 
 #### Users can :-
  <em>In addition to the previous features</em> <br>
-1- Add or remove an accessory to or from favourites <br>
+1- Add or remove a product to or from favourites <br>
 2- Access the favourites page <br>
-2- Add or remove an accessory to or from the cart <br>
+2- Add or remove a product to or from the cart <br>
 3- Access the cart page <br>
-4- Update the quantity of an accessory in the cart <br>
+4- Update the quantity of a product in the cart <br>
 5- Place an order (if not banned)<br>
 
-#### Admins can :-
+#### Moderators can :-
 <em>In addition to the previous features </em> <br>
 1. Create, read, update, and delete categories <br>
-2. Create, read, update, and delete accessories <br>
+2. Create, read, update, and delete products <br>
 3. Read all orders
 4. Update the status of the order<br>
     1. If the order is pending, It can be shipped or cancelled
@@ -50,6 +51,9 @@ There are three types of roles in this application :-
 5. Read all users
 6. Ban or unban a user
 
+#### Admins can :-
+<em>In addition to the previous features </em> <br>
+1. Create, read, ban, and delete moderators <br>
 
 ## Front-end
 - The templates are extended and converted from HTML into blades and components
@@ -60,7 +64,7 @@ There are three types of roles in this application :-
 
 ## How to use
 
-After installing the project as a Laravel 8 project,
+After installing the project as a Laravel 9 project and creating the database and running migrations
 run `php artisan db:seed` to create an admin with email= `admin@test` and password=`Admin123` <br>
 After logging in with this admin account, you can manage the website's content and processes through the dashboard<br>
 

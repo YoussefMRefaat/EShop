@@ -15,7 +15,7 @@ class ShowController extends Controller
      */
     public function index(): \Illuminate\View\View
     {
-        $users = User::where('is_admin' , 0)->get();
+        $users = User::where('role' , 'user')->get();
         return view('admin.users.index' , compact('users'));
     }
 

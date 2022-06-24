@@ -28,7 +28,7 @@
         </div>
     </div>
     @auth
-        @if(auth()->user()->is_admin)
+        @if(auth()->user()->role != 'user')
             <div class="col-sm-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                 </div>

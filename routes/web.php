@@ -48,7 +48,24 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => [ 'auth' , 'admin'],
+    'middleware' => ['auth' , 'roles:admin'],
+    'prefix' => 'dashboard/moderators',
+] , function(){
+    Route::get('' , [\App\Http\Controllers\Admin\Moderators\ShowController::class , 'index'])
+        ->name('dashboard.moderators');
+    Route::get('/create' , [\App\Http\Controllers\Admin\Moderators\CreateController::class , 'create'])
+        ->name('dashboard.moderators.create');
+    Route::post('' , [\App\Http\Controllers\Admin\Moderators\CreateController::class , 'store']);
+    Route::get('/{user}' , [\App\Http\Controllers\Admin\Moderators\ShowController::class , 'show'])
+        ->name('dashboard.moderators.show')->middleware('admin.modification');
+    Route::patch('/{user}' , [\App\Http\Controllers\Admin\Moderators\EditController::class , 'ban'])
+        ->middleware('admin.modification');
+    Route::delete('/{user}' , [\App\Http\Controllers\Admin\Moderators\EditController::class , 'destroy'])
+        ->middleware('admin.modification');
+});
+
+Route::group([
+    'middleware' => ['auth' , 'roles:admin,moderator'],
     'prefix' => 'dashboard',
 ] , function(){
     Route::get('/'  , [\App\Http\Controllers\Admin\DashboardController::class , 'index'])

@@ -16,7 +16,7 @@ class PreventAdminModification
      */
     public function handle(Request $request, Closure $next): \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
     {
-        if($request->route('user')->is_admin) abort(403);
+        if($request->route('user')->role == 'admin') abort(403);
         return $next($request);
     }
 }

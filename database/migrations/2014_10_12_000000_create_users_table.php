@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->boolean('is_banned')->default(false);
-            $table->boolean('is_admin')->default(false);
+            $table->enum('role' , ['admin' , 'moderator' , 'user'])->default('user');
             $table->dateTime('last_active')->useCurrent();
             $table->timestamps();
         });

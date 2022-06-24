@@ -10,7 +10,7 @@
                     <th>Phone</th>
                     <th>Last Active</th>
                     <th>Show</th>
-                    <th>ban</th>
+                    <th>Ban</th>
                 </tr>
             </x-slot>
             <x-slot name="tbody">

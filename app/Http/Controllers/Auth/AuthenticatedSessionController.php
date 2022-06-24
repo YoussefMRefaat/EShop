@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         session()->put('cartId' , \auth()->user()->cart()->first()->id);
 
-        return ($request->user()->is_admin) ? redirect(route('dashboard')) : redirect(route('home'));
+        return ($request->user()->role == 'user') ? redirect(route('home')) : redirect(route('dashboard'));
     }
 
     /**

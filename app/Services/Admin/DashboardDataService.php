@@ -17,7 +17,7 @@ class DashboardDataService{
      */
     public function getData(): array
     {
-        $users = User::where('is_admin' , 0)->count();
+        $users = User::where('role' , 'user')->count();
         $products = Product::count();
         $categories = Category::count();
         $allOrders = Order::with('products')->get();

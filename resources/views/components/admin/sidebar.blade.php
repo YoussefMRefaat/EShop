@@ -6,6 +6,14 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+        @if(auth()->user()->role == 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('dashboard.moderators')}}">
+                    <i class="ti-settings menu-icon"></i>
+                    <span class="menu-title">Moderators</span>
+                </a>
+            </li>
+        @endif
         <li class="nav-item">
             <a class="nav-link" href="{{route('dashboard.users')}}">
                 <i class="ti-user menu-icon"></i>
