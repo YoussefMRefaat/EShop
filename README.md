@@ -60,7 +60,7 @@ There are three types of roles in this application :-
 
 ## How to use
 
-After installing the project as a Laravel 8 project,
+After installing the project as a Laravel 9 project,
 run `php artisan db:seed` to create an admin with email= `admin@test` and password=`Admin123` <br>
 After logging in with this admin account, you can manage the website's content and processes through the dashboard<br>
 
