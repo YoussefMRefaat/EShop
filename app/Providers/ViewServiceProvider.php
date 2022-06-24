@@ -25,6 +25,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['components.user.sidebar' , 'components.user.footbar'] , UserCategoriesComposer::class);
+        View::composer(['components.user.layout'] , UserCategoriesComposer::class);
     }
 }

@@ -11,7 +11,7 @@
 
         <div class="container-fluid">
             <div class="row border-top px-xl-5">
-                <x-user.sidebar></x-user.sidebar>
+                <x-user.sidebar :categories="$categories"></x-user.sidebar>
                 <x-user.navbar></x-user.navbar>
             </div>
         </div>
@@ -20,7 +20,7 @@
 
         {{$content}}
 
-        <x-user.footbar></x-user.footbar>
+        <x-user.footbar :categories="$categories"></x-user.footbar>
 
         <x-user.footer></x-user.footer>
     </body>
